@@ -2,8 +2,10 @@
 import random
 import threading
 import time
+import mss
 
 from config.GlobalConfig import global_config
+from function.AutoFishDiscard import overtime_action
 from utils.MouseOrKeyBoardUtil import hold_mouse_left_button, hold_mouse_right_button, key_press, ensure_mouse_left_up, \
     ensure_mouse_right_up, key_release
 
@@ -18,6 +20,8 @@ def auto_await():
     """
     global actions, run_event
 
+    local_scr = None
+
     while True:
         # 等待启动信号（阻塞式等待，不占用 CPU）
         if not run_event.is_set():
@@ -27,6 +31,14 @@ def auto_await():
         # 执行一次随机操作
         action_choice = random.choice(actions)
         try:
+            # 创建独立的 mss 实例
+            if local_scr is None:
+                local_scr = mss.mss()
+            global_config.set_scr(local_scr)
+
+            # 加时
+            overtime_action()
+
             if 'mouse' in action_choice:
                 if action_choice == 'mouse_left':
                     hold_mouse_left_button(0.1)
@@ -45,10 +57,12 @@ def auto_await():
 
         # 长时间休眠（180 秒）
         # 使用分段休眠，以便快速响应停止信号
-        for _ in range(180):  # 180 次 * 1 秒 = 180 秒
+        for _ in range(90):  # 90 次 * 2 秒 = 180 秒
             if not run_event.is_set():
-                continue
-            time.sleep(1.0)
+                break
+            # 加时
+            overtime_action()
+            time.sleep(2.0)
 
 
 def toggle_run_auto_await():

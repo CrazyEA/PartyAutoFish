@@ -4,6 +4,7 @@ import time
 
 import mss
 
+from function.AutoFishDiscard import overtime_action
 from operate.Action import uno_skip_matched, uno_click_skip_button
 from config.GlobalConfig import global_config
 from utils.MouseOrKeyBoardUtil import ensure_mouse_left_up
@@ -33,6 +34,9 @@ def auto_uno_skip():
             global_config.set_scr(local_scr)
 
             if run_event.is_set():
+                # 加时
+                overtime_action()
+
                 if uno_skip_times <= 0:
                     stop_auto_skip()
                     break

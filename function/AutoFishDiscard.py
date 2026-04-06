@@ -5,7 +5,8 @@ import mss
 
 from operate.Action import open_fish_bucket, locked_fish_matched, close_fish_bucket, \
     recognize_fish_quality, lock_fish, discard_fish, bucket_empty_matched, bucket_opened_matched, mouse_move_safe, \
-    waiting_strike_matched, retrieve_the_rod, drag_fish_matched, bucket_48_matched, fished_matched
+    waiting_strike_matched, retrieve_the_rod, drag_fish_matched, bucket_48_matched, fished_matched, overtime_matched, \
+    overtime_n, overtime_y
 from config.GlobalConfig import global_config
 from utils.MouseOrKeyBoardUtil import ensure_mouse_left_up, ensure_mouse_right_up, hold_mouse_left_button
 
@@ -24,6 +25,17 @@ discard_count = None
 
 run_event = threading.Event()
 
+# 加时
+def overtime_action():
+    # 处理加时选择（线程安全读取参数）
+    current_overtime_val = global_config.get_param('is_overtime')
+    if current_overtime_val == 0:
+        if overtime_matched():
+            overtime_n()
+    elif current_overtime_val == 1:
+        if overtime_matched():
+            overtime_y()
+    time.sleep(0.05)
 
 def auto_fish_discard_sync(event):
     """
@@ -67,6 +79,9 @@ def auto_fish_discard_sync(event):
             return
 
         while event.is_set():
+            #加时判断
+            overtime_action()
+
             if locked_fish_matched():
                 print("🌊🐟️ [放生] 当前没有鱼可以放生...")
 
@@ -169,6 +184,9 @@ def auto_fish_discard():
                     hold_mouse_left_button(0.2)
                     time.sleep(1)
 
+                # 加时判断
+                overtime_action()
+
                 # 鱼桶是否已打开
                 if not bucket_opened_matched():
                     open_fish_bucket()
@@ -180,6 +198,9 @@ def auto_fish_discard():
                     continue
 
                 while run_event.is_set():
+                    # 加时判断
+                    overtime_action()
+
                     if locked_fish_matched():
                         print("🌊🐟️ [放生] 当前没有鱼可以放生...")
                         close_fish_bucket()
