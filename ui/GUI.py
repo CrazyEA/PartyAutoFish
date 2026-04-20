@@ -290,7 +290,7 @@ def print_to_console(message, level="INFO"):
 
 
 def create_gui(**kwargs):
-    global console_instance, fish_rod_type_choose
+    global console_instance, fish_rod_type_choose, auto_discard_level_var
 
     # 创建现代化主题窗口
     root = ttkb.Window(themename="darkly")
@@ -425,7 +425,7 @@ def create_gui(**kwargs):
         param_vars['cycle_times'].set(global_config.params['fish_config'].get(fish_rod_type_choose)['cycle_times'])
         param_vars['casting_time'].set(global_config.params['fish_config'].get(fish_rod_type_choose)['casting_time'])
         print_to_console("鱼杆类型:已设置为: {}".format(selected), "INFO")
-        print_to_console("等待用户保存...","WARNING")
+        print_to_console("等待用户保存...", "WARNING")
 
     fish_rod_type_frame = ttkb.Frame(params_card)
     fish_rod_type_frame.pack(fill=X)
@@ -560,6 +560,7 @@ def create_gui(**kwargs):
         width=12
     )
     discard_level_combo.set(QUALITY_LEVELS[global_config.params['discard_level'] - 1])
+    auto_discard_level_var = global_config.params['discard_level']
     discard_level_combo.bind("<<ComboboxSelected>>", on_discard_level_select)
     discard_level_combo.pack(side=RIGHT)
 
