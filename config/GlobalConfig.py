@@ -183,7 +183,7 @@ class GlobalConfig:
             data = self.params.copy()
         self.scale_x = data.get('custom_width') / data.get('base_width')
         self.scale_y = data.get('custom_height') / data.get('base_height')
-        self.scale_uniform = min(self.scale_x, self.scale_y)
+        self.scale_uniform = self.scale_y
         with open(PARAMETER_FILE, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
             print("💾 [保存] 参数已成功保存到文件")
@@ -251,7 +251,7 @@ class GlobalConfig:
                     else:
                         self.params['custom_height'] = user32.GetSystemMetrics(1)  # 自动读取屏幕分辨率
                     self.scale_y = self.params['custom_height'] / self.params['base_height']
-                    self.scale_uniform = min(self.scale_x, self.scale_y)
+                    self.scale_uniform = self.scale_y
 
                 screen_init_adapt()
             return True

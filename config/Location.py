@@ -1,7 +1,7 @@
 from utils.ScreenAdapt import scale_point_anchored, scale_corner_anchored, scale_cords_x
 
 # 位置信息(基准"2k")
-BAIT_REGION_BASE = (2318, 1296, 30, 22, 'br')  # 鱼饵数量区域  3440*1440(3198, 1296) 右下角锚定 1k(1739,972)
+BAIT_REGION_BASE = (2318, 1296, 30, 22, 'br')  # 鱼饵数量区域  3440*1440(3198, 1296) 右下角锚定 1k(1739,972)  2560*1600(2291,1437)
 BAIT_CORP_LOCATION = (15, 22, 'br')  # 鱼饵数量基本裁剪大小
 FISH_STAR_REGION_BASE = (1172, 165, 35, 32, 'tc')  # 上鱼星星 3440*1440(1613, 165) 1K(879 122)
 F_1_REGION_BASE = (1100, 1329, 11, 20, 'bc')  # F1位置 3440*1440(1539, 1296) 1K(823,995)
