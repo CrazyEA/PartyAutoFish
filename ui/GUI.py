@@ -19,7 +19,7 @@ QUALITY_LEVEL_MAP = {
     "史诗": 4,
     "传奇": 5
 }
-auto_discard_level_var = 4
+auto_discard_level_var = global_config.params['discard_level']
 fish_rod_type_choose = 'ul'
 
 
@@ -544,7 +544,7 @@ def create_gui(**kwargs):
     def on_discard_level_select(event):
         global auto_discard_level_var
         selected = discard_level_combo.get()
-        auto_discard_level_var = QUALITY_LEVEL_MAP.get(selected, 4)
+        auto_discard_level_var = QUALITY_LEVEL_MAP.get(selected, global_config.params['discard_level'])
         print_to_console("自动丢鱼品质阈值已设置为: 丢弃{}以下".format(selected), "INFO")
         print_to_console("等待用户保存...", "WARNING")
 
