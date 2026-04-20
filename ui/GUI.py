@@ -20,7 +20,7 @@ QUALITY_LEVEL_MAP = {
     "传奇": 5
 }
 auto_discard_level_var = global_config.params['discard_level']
-fish_rod_type_choose = 'ul'
+fish_rod_type_choose = global_config.params['fish_rod_type']
 
 
 class ConsoleRedirector:
@@ -439,6 +439,7 @@ def create_gui(**kwargs):
         width=9
     )
     fish_rod_type_combo.set(FishRodType.from_string(global_config.params['fish_rod_type']).value[0])
+    fish_rod_type_choose = global_config.params['fish_rod_type']
     fish_rod_type_combo.bind("<<ComboboxSelected>>", on_fish_rod_type_select)
     fish_rod_type_combo.pack(side=RIGHT)
     # 参数网格布局
