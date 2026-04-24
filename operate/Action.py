@@ -261,7 +261,7 @@ def bucket_full_matched():
 
 # 鱼饵不足 此功能只保证2K分辨率下正常
 def no_bait_matched():
-    return match(location.no_bait_region_base, png_template.no_bait_template, 0.9)
+    return match(location.no_bait_region_base, png_template.no_bait_template, 0.95)
 
 
 # 桶是否为空

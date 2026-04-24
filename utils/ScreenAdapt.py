@@ -33,6 +33,10 @@ def scale_point_anchored(x, y, screen_location):
         new_x = global_config.params['custom_width'] / 2 + new_offset_x
         new_y = global_config.params['custom_height'] / 2 + new_offset_y
 
+    if AnchorType.from_string(screen_location) is AnchorType.TOP_LEFT:
+        new_x = x * global_config.scale_uniform
+        new_y = y * global_config.scale_uniform
+
     elif AnchorType.from_string(screen_location) == AnchorType.TOP_RIGHT:
         offset_x = global_config.params['base_width'] - x
         new_x = global_config.params['custom_width'] - offset_x * global_config.scale_uniform
